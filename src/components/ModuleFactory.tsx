@@ -39,7 +39,6 @@ export function ModuleFactory({ targetUserId, onCreated }: ModuleFactoryProps) {
     setError(null);
     try {
       const userId = targetUserId.trim();
-      const modulesRef = ref(db, `users/${userId}/modules`);
       const farmsRef = ref(db, `users/${userId}/farms`);
 
       let farmId: string | null = null;

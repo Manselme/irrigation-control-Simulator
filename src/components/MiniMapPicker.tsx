@@ -1,6 +1,5 @@
 "use client";
 
-import { useCallback } from "react";
 import { MapContainer, TileLayer, useMapEvents } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import type { Position } from "../types";

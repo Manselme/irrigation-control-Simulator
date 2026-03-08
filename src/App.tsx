@@ -5,7 +5,7 @@ import {
   onAuthStateChanged,
   User,
 } from "firebase/auth";
-import { ref, get, set, onValue, off } from "firebase/database";
+import { ref, get, set, onValue } from "firebase/database";
 import { auth, db } from "./firebase";
 import type { Module, ModuleType } from "./types";
 import { SimulatorProvider, useSimulator } from "./context/SimulatorContext";
@@ -65,7 +65,7 @@ function Dashboard() {
         .map(([id, v]) => parseModule(id, v as Record<string, unknown>));
       setModules(list);
     });
-    return () => off(modulesRef, unsub);
+    return () => unsub();
   }, [targetUserId]);
 
   useScenarioMode(

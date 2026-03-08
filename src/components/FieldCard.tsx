@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { ref, get, set, onValue, off } from "firebase/database";
+import { ref, get, set, onValue } from "firebase/database";
 import { db } from "../firebase";
 import { Sprout } from "lucide-react";
 import type { Position } from "../types";
@@ -52,7 +52,7 @@ export function FieldCard({
       if (typeof v.humidity === "number") setLocalHumidity(v.humidity);
       if (typeof v.ph === "number") setLocalPh(v.ph);
     });
-    return () => off(sensorRef, unsub);
+    return () => unsub();
   }, [userId, moduleId]);
 
   useEffect(() => {

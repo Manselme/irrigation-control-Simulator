@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import { ref, get, set, onValue, off } from "firebase/database";
+import { ref, get, set, onValue } from "firebase/database";
 import { db } from "../firebase";
 import { Droplets } from "lucide-react";
 
@@ -76,7 +76,7 @@ export function PumpCard({
     });
 
     return () => {
-      off(commandsRef, unsub);
+      unsub();
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
   }, [userId, moduleId, loraDelaySec]);
