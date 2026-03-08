@@ -6,7 +6,7 @@ import {
   User,
 } from "firebase/auth";
 import { ref, get, set, onValue } from "firebase/database";
-import { auth, db } from "./firebase";
+import { auth, db, isFirebaseConfigured } from "./firebase";
 import type { Module, ModuleType } from "./types";
 import { SimulatorProvider, useSimulator } from "./context/SimulatorContext";
 import { ModuleFactory } from "./components/ModuleFactory";
@@ -267,7 +267,32 @@ function LoginScreen() {
   );
 }
 
+function ConfigMissing() {
+  return (
+    <div className="min-h-screen flex flex-col items-center justify-center p-6 bg-slate-900 text-slate-200">
+      <h1 className="text-lg font-semibold text-slate-100 mb-2">
+        Configuration Firebase manquante
+      </h1>
+      <p className="text-sm text-slate-400 text-center max-w-md mb-4">
+        Sur Vercel, ajoutez les variables d&apos;environnement dans le projet : Settings → Environment Variables.
+        Préfixe requis : <code className="font-mono text-sky-400">VITE_FIREBASE_</code> (API_KEY, AUTH_DOMAIN, DATABASE_URL, PROJECT_ID, etc.).
+      </p>
+      <p className="text-xs text-slate-500">
+        En local, créez un fichier <code className="font-mono">.env</code> avec ces variables.
+      </p>
+    </div>
+  );
+}
+
 export default function App() {
+  if (!isFirebaseConfigured) {
+    return <ConfigMissing />;
+  }
+
+  return <AppWithAuth />;
+}
+
+function AppWithAuth() {
   const { user, loading } = useDashboardAuth();
 
   if (loading) {

@@ -12,18 +12,24 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
 
-let app: FirebaseApp;
-let auth: Auth;
-let db: Database;
+export const isFirebaseConfigured =
+  !!firebaseConfig.apiKey && !!firebaseConfig.projectId && !!firebaseConfig.databaseURL;
+
+let app: FirebaseApp | undefined;
+let auth: Auth | undefined;
+let db: Database | undefined;
 
 if (getApps().length === 0) {
-  app = initializeApp(firebaseConfig);
-  auth = getAuth(app);
-  db = getDatabase(app);
+  if (isFirebaseConfigured) {
+    app = initializeApp(firebaseConfig);
+    auth = getAuth(app);
+    db = getDatabase(app);
+  }
 } else {
   app = getApps()[0] as FirebaseApp;
   auth = getAuth(app);
   db = getDatabase(app);
 }
 
-export { app, auth, db };
+// Utilisés uniquement quand isFirebaseConfigured est true (voir App.tsx)
+export { app, auth: auth!, db: db! };
