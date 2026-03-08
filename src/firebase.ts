@@ -31,7 +31,8 @@ if (getApps().length === 0) {
   db = getDatabase(app);
 }
 
-// Export pour usage quand isFirebaseConfigured est true (voir App.tsx)
-const authExport = auth as Auth;
-const dbExport = db as Database;
-export { app, authExport as auth, dbExport as db };
+const authExport: Auth = auth as Auth;
+const dbExport: Database = db as Database;
+export { app };
+export { authExport as auth };
+export { dbExport as db };
